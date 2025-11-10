@@ -1,0 +1,44 @@
+# 工作流的名称，会显示在 GitHub Actions 页面上
+name: Create Release and Upload Zip
+
+# 触发条件：当一个以 "v" 开头的标签 (tag) 被推送到 GitHub 时
+on:
+  push:
+    tags:
+      - 'v*'
+
+# 工作内容
+jobs:
+  build:
+    # 执行此工作的虚拟机环境
+    runs-on: ubuntu-latest
+
+    steps:
+      # 步骤 1: 获取你仓库中的代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 步骤 2: 把你的文件打包成 .zip
+      # 我们明确指定要打包的 5 个文件和 1 个文件夹
+      - name: Create Zip Archive
+        run: |
+          zip -r ocr-box-release.zip \
+            content.js \
+            manifest.json \
+            options.html \
+            options.js \
+            sw.js \
+            icons/
+
+      # 步骤 3: 创建一个 GitHub Release，并把 .zip 文件上传为附件
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          # 将我们上一步制作的 .zip 文件作为发布附件
+          files: ocr-box-release.zip
+          # github.ref_name 会自动抓取你的标签名称 (例如 "v1.2.0")
+          # 并将其设置为 Release 的标题
+          name: Release ${{ github.ref_name }}
+          # 如果这不是一个预发布版本，就设置为 false
+          prerelease: false

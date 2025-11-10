@@ -1,0 +1,10 @@
+{
+  "extName": {
+    "message": "OCR Box",
+    "description": "The name of the extension."
+  },
+  "extDesc": {
+    "message": "Alt+0：截图并使用 ocr.space API 识别。需要用户在“选项”页提供自己的 API Key。",
+    "description": "The short description of the extension."
+  }
+}

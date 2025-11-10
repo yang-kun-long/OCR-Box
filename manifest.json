@@ -1,9 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "OCR Box (ocr.space API)",
-  "version": "1.2.0",
-  "description": "Alt+0：截图并使用 ocr.space API 识别。需要用户在“选项”页提供自己的 API Key。",
   
+  "name": "__MSG_extName__",
+  "version": "1.2.0",
+  "description": "__MSG_extDesc__",
+
+  "default_locale": "zh_CN",
 
   "minimum_edge_version": "79",
 
@@ -37,7 +39,7 @@
   ],
 
   "action": {
-    "default_title": "OCR Box"
+    "default_title": "__MSG_extName__"
   },
 
   "options_page": "options.html"

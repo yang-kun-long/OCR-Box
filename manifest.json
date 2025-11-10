@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "OCR Box (ocr.space API)",
+  "version": "1.2.0",
+  "description": "Alt+0：截图并使用 ocr.space API 识别。需要用户在“选项”页提供自己的 API Key。",
+  
+
+  "minimum_edge_version": "79",
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "<all_urls>",
+    "https://api.ocr.space/*"
+  ],
+
+  "background": {
+    "service_worker": "sw.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "action": {
+    "default_title": "OCR Box"
+  },
+
+  "options_page": "options.html"
+}

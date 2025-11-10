@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>OCR Box 选项</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 24px;
+      min-width: 450px;
+      background-color: #f9fafb;
+      color: #1f2937;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #111827;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 16px;
+      font-weight: 600;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 8px;
+      margin-top: 32px;
+      margin-bottom: 16px;
+    }
+    .tutorial-box {
+      background-color: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+    .tutorial-box h3 {
+      margin-top: 0; margin-bottom: 12px; font-size: 16px; font-weight: 600; color: #111827;
+    }
+    .tutorial-box ol {
+      margin: 0; padding-left: 20px; font-size: 14px;
+    }
+    .tutorial-box li {
+      margin-bottom: 8px; line-height: 1.5; color: #374151;
+    }
+    .tutorial-box li a {
+      color: #2563eb; text-decoration: none; font-weight: 500;
+    }
+    .tutorial-box li a:hover { text-decoration: underline; }
+    .tutorial-box li:last-child { margin-bottom: 0; }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    /* --- 修改：同时适配 text 和 password 输入框 --- */
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      box-sizing: border-box; 
+    }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: 2px solid transparent;
+      outline-offset: 2px;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59,130,246,.5);
+    }
+    
+    button {
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      background-color: #2563eb;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color .2s;
+    }
+    button:hover {
+      background-color: #1d4ed8;
+    }
+    #status {
+      margin-left: 12px;
+      font-size: 14px;
+      color: #10b981;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .note {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 6px;
+    }
+    
+    /* --- 快捷键设置样式 --- */
+    .hotkey-grid {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hotkey-grid label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 0; /* 覆盖默认 */
+    }
+    .hotkey-grid input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+    }
+    .hotkey-grid span {
+      font-size: 18px;
+      font-weight: 600;
+      color: #6b7280;
+    }
+    .hotkey-grid input[type="text"] {
+      width: 100px;
+      flex-grow: 1;
+    }
+    
+    /* --- 新增：API Key 隐藏/显示样式 --- */
+    .api-key-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .api-key-wrapper input[type="password"] {
+      flex-grow: 1; /* 让输入框占满剩余空间 */
+    }
+    .show-key-label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 0; /* 覆盖默认 */
+      font-size: 14px;
+      font-weight: 400;
+      color: #374151;
+      white-space: nowrap; /* 防止“显示”二字换行 */
+      cursor: pointer;
+    }
+    .show-key-label input[type="checkbox"] {
+      width: 14px;
+      height: 14px;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>OCR Box 插件选项</h1>
+
+    <h2>快捷键设置</h2>
+    <div class="form-group">
+      <label>选择组合键 (默认 Alt + 0)</label>
+      <div class="hotkey-grid">
+        <label><input type="checkbox" id="mod_alt"> Alt</label>
+        <label><input type="checkbox" id="mod_ctrl"> Ctrl</label>
+        <label><input type="checkbox" id="mod_shift"> Shift</label>
+        <span>+</span>
+        <input type="text" id="hotkey_key" maxlength="10" placeholder="e.g., 0">
+      </div>
+      <p class="note">主键请输入 <a href="https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values" target="_blank" rel="noopener noreferrer">e.key 的值</a> (例如 '0', 'Q', 'F1')。建议使用单个字符。</p>
+    </div>
+    <h2>OCR 引擎设置</h2>
+    <div class="form-group">
+      <label for="ocrEngine">选择 OCR 引擎</label>
+      <select id="ocrEngine">
+        <option value="auto">自动 (推荐)</option>
+        <option value="2">引擎 2 (中文/日文/韩文 最佳)</option>
+        <option value="1">引擎 1 (速度优先)</option>
+      </select>
+      <p class="note">“自动”模式会优先尝试引擎 2，如果失败或超时，会自动切换到引擎 1。</p>
+    </div>
+    <h2>API Key 设置</h2>
+    <div class="tutorial-box">
+      <h3>如何获取 API Key？</h3>
+      <ol>
+        <li>访问 <a href="https://ocr.space/ocrapi/freekey" target="_blank" rel="noopener noreferrer">ocr.space 免费 API 页面</a></li>
+        <li>注册一个 "FREE Plan" 账户 。</li>
+        <li>注册后ocr.space会向您的邮箱内发送(API Key)。</li>
+        <li>将密钥粘贴到下方的输入框中，然后点击“保存”。</li>
+      </ol>
+    </div>
+    
+    <div class="form-group">
+      <label for="apiKey">ocr.space API Key</label>
+      
+      <div class="api-key-wrapper">
+        <input type="password" id="apiKey" placeholder="在此处粘贴你的 API Key">
+        <label class="show-key-label">
+          <input type="checkbox" id="showApiKey"> 显示
+        </label>
+      </div>
+      </div>
+
+    <button id="save">保 存 设 置</button>
+    <span id="status"></span>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

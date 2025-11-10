@@ -1,4 +1,4 @@
-#  OCR Box (ocr.space API)
+#  OCR Box
 
 一个轻量级、高度可定制的浏览器截图 OCR 扩展，基于免费的 [ocr.space API](https://ocr.space/OCRAPI)。
 

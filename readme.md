@@ -1,6 +1,6 @@
 #  OCR Box
 
-一个轻量级、高度可定制的浏览器截图 OCR 扩展，基于免费的 [ocr.space API](https://ocr.space/OCRAPI)。
+一个轻量级、高度可定制的浏览器截图 OCR 扩展，基于免费的 [ocr.space API](https://ocr.space/ocrapi/freekey)。
 
 ![[此处可以放一张 GIF 动图，展示从截图到弹出结果框的全过程]](https://via.placeholder.com/800x400.png?text=OCR+Box+功能演示)
 
@@ -74,4 +74,4 @@
 
 ## 📄 许可证
 
-本项目基于 [MIT](LICENSE) 许可证。
+本项目基于 [MIT](https://github.com/yang-kun-long/OCR-Box?tab=MIT-1-ov-file) 许可证。

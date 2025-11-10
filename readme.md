@@ -1,8 +1,19 @@
-#  OCR Box
+#  OCR Box (ocr.space API)
 
 一个轻量级、高度可定制的浏览器截图 OCR 扩展，基于免费的 [ocr.space API](https://ocr.space/ocrapi/freekey)。
 
-![[此处可以放一张 GIF 动图，展示从截图到弹出结果框的全过程]](https://via.placeholder.com/800x400.png?text=OCR+Box+功能演示)
+<table>
+  <tr>
+    <td align="center"><b>选项页面</b> (高度可配置)</td>
+    <td align="center"><b>截图操作</b> (选择区域)</td>
+    <td align="center"><b>识别结果</b> (快速弹窗)</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/options.png" alt="插件选项页面" width="100%"></td>
+    <td><img src="screenshots/cropping.png" alt="插件截图工作界面" width="100%"></td>
+    <td><img src="screenshots/result.png" alt="插件识别结果弹窗" width="100%"></td>
+  </tr>
+</table>
 
 ---
 
@@ -55,7 +66,7 @@
 1.  在 Edge 浏览器右上角找到本插件图标，**右键点击**，选择“**选项**”。
 2.  在打开的选项页面中，您会看到获取 API Key 的教程。
 3.  点击 [ocr.space 免费 API 页面](https://ocr.space/OCRAPI#free) 链接，注册一个 **FREE Plan** 账户。
-4.  登录后，在您的账户信息中找到并复制您的 API 密钥（API Key）。
+4.  ocr.space会向你的邮箱发送API Key。
 5.  将密钥粘贴到选项页的“API Key”输入框中（输入框为密码模式，可点击“显示”来检查）。
 6.  点击“**保存设置**”。
 
@@ -74,4 +85,4 @@
 
 ## 📄 许可证
 
-本项目基于 [MIT](https://github.com/yang-kun-long/OCR-Box?tab=MIT-1-ov-file) 许可证。
+本项目基于 [MIT](https://github.com/yang-kun-long/OCR-Box/blob/main/LICENSE) 许可证。

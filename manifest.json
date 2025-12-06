@@ -18,16 +18,29 @@
   "permissions": [
     "activeTab",
     "tabs",
-    "storage"
+    "storage",
+    "declarativeNetRequest"
   ],
 
   "host_permissions": [
     "<all_urls>",
-    "https://api.ocr.space/*"
+    "https://api.ocr.space/*",
+    "https://fastocr.lingduquan.com/*", 
+    "https://aip.baidubce.com/*" 
   ],
 
   "background": {
     "service_worker": "sw.js"
+  },
+  
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
   },
 
   "content_scripts": [

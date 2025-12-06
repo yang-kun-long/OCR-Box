@@ -1,5 +1,10 @@
 // content.js
 (() => {
+  function generateFakeId() {
+    return 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, function() {
+      return (Math.random() * 16 | 0).toString(16);
+    });
+  }
   // ===== 修改点 START (1/3): API 常量配置 =====
   
   // 1. 移除了硬编码的 OCR_SPACE_API_KEY 和 HOTKEY
@@ -342,6 +347,49 @@
   // ===== 修改点 START (2/3): 上传 OCR (完全重构) =====
   async function uploadAndOcr(canvas) {
     
+    // 0. 【关键修复】变量定义必须放在最前面！
+    const base64DataUrl = canvas.toDataURL(IMAGE_TYPE, JPEG_QUALITY);
+
+    // ============================================================
+    // 分支 A: 百度极速版 (通过 sw.js 中转，解决 CORS 问题)
+    // ============================================================
+    if (settings.ocrEngineSetting === "baidu_speed") {
+      toast("正在极速识别 (后台处理中)...");
+      
+      try {
+        // 1. 准备纯 Base64 (去头)
+        const pureBase64 = base64DataUrl.replace(/^data:image\/\w+;base64,/, "");
+
+        // 2. 【核心修复】不自己 fetch，而是发消息给后台 sw.js
+        const response = await chrome.runtime.sendMessage({
+          type: "perform_baidu_ocr",
+          base64: pureBase64
+        });
+
+        // 3. 处理后台返回的结果
+        if (!response || !response.ok) {
+          throw new Error(response ? response.error : "后台无响应");
+        }
+
+        const resultJson = response.data;
+        const results = resultJson.words_result || [];
+        
+        if (results.length === 0) {
+          showResult("（未识别到文字）");
+        } else {
+          const fullText = results.map(item => item.words).join("\n");
+          showResult(fullText);
+          toast(`极速识别完成！(${results.length} 行)`, true);
+        }
+
+      } catch (err) {
+        console.error("[Baidu Engine Error]", err);
+        toast("极速版失败: " + err.message, false);
+      }
+      
+      return; // 结束，不执行下面的代码
+    }
+    
     // 1. 获取 API Key
     let userApiKey;
     try {
@@ -369,8 +417,6 @@
       return; // 中止执行
     }
     
-    // 3. 转换为 Base64
-    const base64DataUrl = canvas.toDataURL(IMAGE_TYPE, JPEG_QUALITY);
 
     // 4. (新增) 定义一个可重用的、带超时的 fetch 辅助函数
     const performFetch = async (engine) => {

@@ -1,3 +1,4 @@
+<!-- ocr-box-release\options.html -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -181,13 +182,19 @@
     </div>
     <h2>OCR 引擎设置</h2>
     <div class="form-group">
-      <label for="ocrEngine">选择 OCR 引擎</label>
+      <label for="ocrEngine">选择识别通道</label>
       <select id="ocrEngine">
-        <option value="auto">自动 (推荐)</option>
-        <option value="2">引擎 2 (中文/日文/韩文 最佳)</option>
-        <option value="1">引擎 1 (速度优先)</option>
+        
+        <option disabled>─────── OCR.space (需API Key) ───────</option>
+        <option value="auto">OCR.space 自动 (默认)</option>
+        <option value="2">OCR.space 引擎 2 (中文/日韩最佳)</option>
+        <option value="1">OCR.space 引擎 1 (速度优先)</option>
+        <option value="baidu_speed">🚀 百度极速版 (使用该模式产生后果与作者无关)</option>
       </select>
-      <p class="note">“自动”模式会优先尝试引擎 2，如果失败或超时，会自动切换到引擎 1。</p>
+      <p class="note">
+        <strong>百度极速版</strong>：直连百度云(使用该模式产生后果与作者无关)<br>
+        <strong>OCR.space</strong>：传统稳定通道，需要在下方填入 API Key。
+      </p>
     </div>
     <h2>API Key 设置</h2>
     <div class="tutorial-box">

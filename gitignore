@@ -1,6 +1,9 @@
 *.zip
 .DS_Store
 Thumbs.db
-*.zip
 *.rar
 *.7z
+ocr-box-release/
+_metadata/
+*.crx
+*.pem

@@ -29,6 +29,7 @@ jobs:
           zip -r ocr-box-release.zip \
             content.js \
             manifest.json \
+            rules.json \
             options.html \
             options.js \
             sw.js \

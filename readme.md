@@ -2,18 +2,18 @@
 
 一个轻量级、双引擎驱动的浏览器截图 OCR 扩展。集成了稳定的 [OCR.space](https://ocr.space/) 服务与实验性的百度云加速通道。
 
-\<table\>
-  \<tr\>
-    \<td align="center"\>\<b\>选项页面\</b\> (双引擎切换)\</td\>
-    \<td align="center"\>\<b\>截图操作\</b\> (精准框选)\</td\>
-    \<td align="center"\>\<b\>识别结果\</b\> (秒级响应)\</td\>
-  \</tr\>
-  \<tr\>
-    \<td\>\<img src="screenshots/options.png" alt="插件选项页面" width="100%"\>\</td\>
-    \<td\>\<img src="screenshots/cropping.png" alt="插件截图工作界面" width="100%"\>\</td\>
-    \<td\>\<img src="screenshots/result.png" alt="插件识别结果弹窗" width="100%"\>\</td\>
-  \</tr\>
-\</table\>
+<table>
+<tr>
+<td align="center"><b>选项页面</b> (双引擎切换)</td>
+<td align="center"><b>截图操作</b> (精准框选)</td>
+<td align="center"><b>识别结果</b> (秒级响应)</td>
+</tr>
+<tr>
+<td><img src="screenshots/options.png" alt="选项" width="100%"></td>
+<td><img src="screenshots/cropping.png" alt="截图" width="100%"></td>
+<td><img src="screenshots/result.png" alt="结果" width="100%"></td>
+</tr>
+</table>
 
 -----
 

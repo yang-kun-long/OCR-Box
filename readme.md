@@ -48,7 +48,7 @@
 2.  搜索 "OCR Box" (或您上架时使用的名称)。
 3.  点击“获取”按钮。
 
-*(上架成功后请替换为商店链接)*
+*[(上架成功后请替换为商店链接)](https://microsoftedge.microsoft.com/addons/detail/ocr-box/pblfahjdheanodpnjafdefodiijmfbmf?hl=zh-CN)*
 
 ### 2. (用于开发) 本地加载
 

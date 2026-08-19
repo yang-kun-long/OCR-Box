@@ -1,39 +1,6 @@
 // sw.js - MV3 Service Worker
 
-// ===== 监听器 1: 处理来自 content.js 的所有消息 (修改) =====
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  
-  // Case 1: 截图请求 (已有)
-  if (msg && msg.type === "captureVisibleTab") {
-    const quality = Math.round((msg.quality ?? 0.92) * 100); // 0~100
-    chrome.tabs.captureVisibleTab(
-      { format: "jpeg", quality },
-      (dataUrl) => {
-        if (chrome.runtime.lastError || !dataUrl) {
-          sendResponse({
-            ok: false,
-            error: chrome.runtime.lastError?.message || "captureVisibleTab failed"
-          });
-        } else {
-          sendResponse({ ok: true, dataUrl });
-        }
-      }
-    );
-    // 异步响应
-    return true;
-  }
-
-  // Case 2: 打开选项页请求 (新增)
-  if (msg && msg.type === "openOptionsPage") {
-    chrome.runtime.openOptionsPage();
-    // 这是一个同步操作，不需要 sendResponse，也不需要 return true
-    return false;
-  }
-
-});
-
-
-// ===== 监听器 2: 处理扩展图标点击事件 (已有) =====
+// ===== 处理扩展图标点击事件 =====
 chrome.action.onClicked.addListener(async (tab) => {
   // 当用户点击图标时，向当前页面的 content.js 发送消息
   try {
@@ -61,29 +28,50 @@ function generateFakeId() {
   });
 }
 
-// 2. 监听来自 content.js 的消息
+function normalizeCaptureQuality(value) {
+  const numericValue = Number(value);
+  if (!Number.isFinite(numericValue)) return 92;
+
+  const percentage = numericValue <= 1 ? numericValue * 100 : numericValue;
+  return Math.min(100, Math.max(0, Math.round(percentage)));
+}
+
+// 监听来自 content.js 的消息
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   
-  // 截图功能 (保留你原有的)
-  if (request.type === "captureVisibleTab") {
-    chrome.tabs.captureVisibleTab(null, { format: "jpeg", quality: request.quality || 90 }, (dataUrl) => {
-      if (chrome.runtime.lastError) {
-        sendResponse({ ok: false, error: chrome.runtime.lastError.message });
-      } else {
-        sendResponse({ ok: true, dataUrl: dataUrl });
-      }
-    });
-    return true; // 保持异步通道开启
-  }
+  if (request && request.type === "captureVisibleTab") {
+    const windowId = sender.tab?.windowId;
+    const options = {
+      format: "jpeg",
+      quality: normalizeCaptureQuality(request.quality)
+    };
 
-  // 打开选项页 (保留你原有的)
-  if (request.type === "openOptionsPage") {
-    chrome.runtime.openOptionsPage();
+    const handleCapture = (dataUrl) => {
+      if (chrome.runtime.lastError || !dataUrl) {
+        sendResponse({
+          ok: false,
+          error: chrome.runtime.lastError?.message || "captureVisibleTab failed"
+        });
+      } else {
+        sendResponse({ ok: true, dataUrl });
+      }
+    };
+
+    if (Number.isInteger(windowId)) {
+      chrome.tabs.captureVisibleTab(windowId, options, handleCapture);
+    } else {
+      chrome.tabs.captureVisibleTab(options, handleCapture);
+    }
     return true;
   }
 
+  if (request && request.type === "openOptionsPage") {
+    chrome.runtime.openOptionsPage();
+    return false;
+  }
+
   // === 【新增】处理百度极速版请求 ===
-  if (request.type === "perform_baidu_ocr") {
+  if (request && request.type === "perform_baidu_ocr") {
     // 必须返回 true，表示我们会异步发送响应
     handleBaiduOcr(request.base64).then(sendResponse);
     return true; 

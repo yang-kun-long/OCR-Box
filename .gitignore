@@ -4,6 +4,7 @@ Thumbs.db
 *.rar
 *.7z
 ocr-box-release/
+release/
 _metadata/
 *.crx
 *.pem

@@ -663,7 +663,8 @@
         await uploadAndOcr(cut);
       } catch (err) {
         console.error("[OCR] capture/crop failed:", err);
-        toast("截图失败（captureVisibleTab）", false);
+        const message = err instanceof Error ? err.message : String(err);
+        toast(`截图失败: ${message}`, false);
       } finally { cleanup(); }
     });
 

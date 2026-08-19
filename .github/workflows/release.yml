@@ -43,5 +43,5 @@ jobs:
         with: # 8 个空格
           # 这一层是 10 个空格
           files: ocr-box-release.zip
-          name: Release ${{ github.ref.name }}
+          name: Release ${{ github.ref_name }}
           prerelease: false
